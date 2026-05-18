@@ -1,0 +1,580 @@
+3:# pahami dahulu konteks dari berikut
+7:## Gambaran utama
+11:## Peran tiap dokumen
+19:## Arah strategis
+25:## Titik kritis
+35:## Bacaan saya atas konteksnya
+52:# jadi apa product yg mereka butuhkan dengan Agent sebagai Power user nya
+56:## Bentuk produk
+60:## Kenapa Agent cocok
+64:## Modul produk
+74:## MVP yang paling tepat
+91:# breakdown Ops Control Tower + Financial Governance
+95:## Ops Tower
+101:## Modul Ops
+111:## Financial Gov
+117:## Modul Finance
+127:## Agent layer
+147:# breakdown daftar layar UI
+151:## Struktur utama
+161:## Layar ops
+181:## Layar finance
+201:## Pola layar
+212:## Prioritas MVP
+239:# break down Operations Home.
+243:## Tujuan layar
+247:## Struktur layout
+261:## Komponen detail
+265:### 1. Header kontrol
+273:### 2. KPI strip
+283:### 3. Alert rail
+295:### 4. Live operations board
+312:### 5. Network health widgets
+325:## Action layer
+339:## Role view
+348:## Tab dan navigasi
+376:# pecah jadi wireframe komponen per section
+380:## Layout global
+401:## Section 1 header
+423:## Section 2 KPI strip
+451:## Section 3 critical alerts
+480:## Section 4 live shipment board
+516:## Section 5 shipment row side panel
+546:## Section 6 exception queue snapshot
+572:## Section 7 branch health panel
+602:## Section 8 manifest health
+624:## Section 9 fleet and driver compliance
+646:## Section 10 route and localhero risk
+667:## Section 11 action and audit rail
+691:## State kosong dan error
+701:## Urutan implementasi
+730:# breakdown Shipment Monitor.
+734:## Tujuan layar
+745:## Layout halaman
+767:## Section 1 header bar
+789:## Section 2 filter bar
+812:## Section 3 summary strip
+833:## Section 4 data grid utama
+849:### Kolom inti
+867:### Kolom lanjutan
+879:## Section 5 row anatomy
+898:## Section 6 row quick actions
+917:## Section 7 quick detail drawer
+951:## Section 8 bulk action bar
+972:## Section 9 sort and saved views
+994:## Section 10 visual states
+1007:## Section 11 mobile and tablet behavior
+1025:## Section 12 implementasi MVP
+1061:# Shipment Monitor : lanjut pecah ini jadi wireframe komponen per section yg lebih detail
+1065:## Struktur halaman
+1081:## Section 1 header
+1085:### Wireframe
+1098:### Komponen
+1107:### States
+1115:## Section 2 filter rail
+1119:### Wireframe
+1139:### Filter detail
+1149:### UX rule
+1156:## Section 3 summary strip
+1160:### Wireframe
+1171:### Komponen kartu
+1179:### KPI yang disarankan
+1189:## Section 4 bulk action bar
+1193:### Wireframe
+1203:### Aksi yang layak
+1213:### Governance
+1219:## Section 5 shipment data grid
+1223:### Wireframe
+1240:### Kolom inti
+1258:### Optional columns
+1268:### Row states
+1278:## Section 6 row component anatomy
+1282:### Struktur row
+1288:### Contoh row
+1296:### Badge yang wajib ada
+1306:## Section 7 row action menu
+1310:### Wireframe
+1325:### Rule per action
+1333:## Section 8 expanded row detail
+1337:### Wireframe
+1353:### Isi minimum
+1365:## Section 9 quick detail drawer
+1369:### Wireframe
+1393:### Tab breakdown
+1395:#### Summary
+1407:#### Timeline
+1419:#### Legs
+1428:#### Manifest
+1437:#### Docs
+1448:#### Incident
+1456:#### Audit
+1461:## Section 10 empty, warning, and error states
+1465:### Empty state
+1473:### Warning state
+1482:### Governance warning
+1490:### Error state
+1498:## Section 11 footer and audit health
+1502:### Wireframe
+1512:### Komponen
+1520:## MVP prioritas
+1539:## Contoh susunan final
+1578:# breakdown Shipment Detail + Tracking timeline
+1582:## Struktur layar
+1599:## Header
+1603:### Wireframe
+1615:### Komponen
+1629:## Status ribbon
+1633:### Wireframe
+1643:### Widget
+1653:### Status variants
+1661:## Core summary
+1665:### Wireframe
+1686:### Field minimum
+1699:## Tracking timeline
+1703:### Wireframe
+1725:### Struktur event card
+1738:### Filter timeline
+1748:### Event types minimum
+1762:### Event state cues
+1771:## Timeline composer
+1775:### Wireframe
+1790:### Validation rules
+1800:## Shipment legs
+1804:### Wireframe
+1819:### Field per leg
+1831:### UX
+1838:## Manifest dan packages
+1842:### Wireframe
+1861:### Manifest fields
+1871:### Package fields
+1879:## Documents
+1883:### Wireframe
+1898:### Tipe dokumen
+1909:### Metadata
+1919:## Incident dan action panel
+1923:### Wireframe
+1942:### Incident data
+1954:### Action governance
+1968:## Audit trail
+1972:### Wireframe
+1984:### Record minimum
+1994:## Tab layout alternatif
+2016:## State penting
+2028:## Breakdown komponen per section
+2045:## MVP layar ini
+2078:# Shipment Detail + Tracking timeline : lanjut pecah ini jadi wireframe komponen per section yg lebih detail
+2082:## Struktur halaman penuh
+2102:## 1. Identity header
+2106:### Wireframe
+2122:### Komponen detail
+2139:### Status badges yang wajib
+2147:## 2. Status + alert ribbon
+2151:### Wireframe
+2164:### Komponen
+2181:### Alert bar di atas ribbon
+2193:## 3. Core summary
+2197:### Wireframe
+2219:### Subcomponents
+2227:### Data groups
+2237:## 4. Tracking timeline
+2241:### Struktur besar
+2252:### 4A. Timeline toolbar
+2263:#### Komponen
+2272:#### Filter yang layak
+2284:### 4B. Event composer
+2303:#### Field rules
+2314:#### UX detail
+2323:### 4C. Event stream
+2347:#### Anatomy event card
+2359:#### Event categories
+2370:#### Row actions
+2381:### 4D. Event detail preview
+2403:## 5. Leg journey
+2407:### Wireframe
+2424:### Per leg component
+2437:### Visual option
+2447:## 6. Manifest + package + docs
+2451:### 6A. Manifest sub-section
+2467:### 6B. Package sub-section
+2486:### 6C. Document sub-section
+2502:## 7. Incident panel
+2506:### Wireframe
+2524:### Subcomponents
+2534:## 8. Action panel
+2538:### Wireframe
+2556:### Button behavior
+2577:## 9. SLA / risk panel
+2581:### Wireframe
+2595:### Nilai panel
+2599:## 10. Audit trail + change history
+2603:### Wireframe
+2620:### Komponen wajib
+2630:### Split yang bagus
+2639:## Layout komponen per section
+2662:## State penting
+2675:## Urutan build MVP
+2714:# breakdown Exception Desk.
+2718:## Tujuan layar
+2722:## Struktur halaman
+2745:## Header dan KPI
+2749:### Wireframe
+2760:### KPI strip
+2771:## Filter dan saved views
+2775:### Wireframe
+2796:## Incident queue table
+2800:### Kolom utama
+2821:### Wireframe
+2834:### Row behavior
+2844:## Incident detail drawer
+2848:### Struktur drawer
+2870:### Section dalam drawer
+2885:## Form create / update incident
+2889:### Field minimum
+2902:### Wireframe
+2919:### Conditional logic
+2926:## Status model
+2939:## Action model
+2943:### Primary actions
+2956:### Action drawer example
+2969:## Prioritas visual
+2989:## Hubungan ke shipment dan tracking
+3007:## Role dan permission
+3021:## Mobile dan desktop
+3040:## State penting
+3052:## MVP paling rasional
+3080:# Exception Desk. : lanjut pecah ini jadi wireframe komponen per section yang detail
+3084:## Struktur layar penuh
+3106:## 1. Desk header
+3110:### Wireframe
+3122:### Komponen
+3133:### Interaction notes
+3140:## 2. KPI + critical alert strip
+3144:### 2A. KPI strip
+3154:### Komponen KPI card
+3173:### 2B. Critical alert strip
+3183:### Komponen
+3192:## 3. Filter / saved views / bulk action bar
+3196:### Wireframe
+3208:### 3A. Filter components
+3221:### 3B. Saved views
+3234:### 3C. Bulk actions
+3245:## 4. Incident queue table
+3249:### Wireframe
+3262:### Kolom level 1
+3275:### Kolom level 2 yang bisa di-toggle
+3286:### Row anatomy
+3297:### Priority visuals
+3305:## 5. Incident detail drawer
+3309:### Wireframe shell
+3323:## 5A. Summary tab
+3327:### Wireframe
+3349:### Komponen
+3357:### Notes
+3361:## 5B. Timeline tab
+3365:### Wireframe
+3381:### Komponen event row
+3390:### Event types dalam timeline
+3403:## 5C. Linked objects tab
+3407:### Wireframe
+3421:### Komponen
+3431:### Why this matters
+3435:## 5D. Corrective actions tab
+3439:### Wireframe
+3456:### Komponen action item
+3467:### Sub-status yang berguna
+3477:## 5E. Audit log tab
+3481:### Wireframe
+3499:### Komponen
+3510:## 6. Sticky queue health footer
+3514:### Wireframe
+3524:### Komponen
+3531:## Modal dan subcomponents penting
+3535:### A. Create Incident modal
+3551:### B. Assign Owner modal
+3562:### C. Escalate modal
+3573:### D. Close Incident modal
+3586:## Detail komponen per section
+3607:## State penting
+3620:## Mobile behavior
+3624:### Mobile stack
+3639:### Mobile priorities
+3649:## Urutan build MVP
+3689:# breakdown Finance Home
+3693:## Tujuan layar
+3697:## Struktur layout
+3708:## Widget inti
+3724:## Breakdown per area
+3726:### 1. Header
+3730:### 2. KPI strip
+3734:### 3. Alert panel
+3738:### 4. AR \& collection
+3742:### 5. Interco discipline
+3746:### 6. Budget \& profitability
+3750:### 7. Close cockpit
+3754:### 8. Audit rail
+3758:## Informasi detail per kartu
+3772:## Aksi cepat
+3776:## Tabs atau subview
+3786:## Role-based visibility
+3797:## Rekomendasi versi MVP
+3823:# breakdown Finance Home
+3827:## Tujuan layar
+3831:## Struktur utama
+3844:## Header dan filter konteks
+3848:### Wireframe
+3862:### Komponen
+3873:## KPI strip
+3877:### Wireframe
+3887:### KPI yang paling relevan
+3897:## Alert dan close readiness
+3901:### Wireframe
+3913:### Close readiness panel
+3928:## Analytical workspace
+3932:### 1. Entity profitability panel
+3946:### 2. Branch / cost center panel
+3961:### 3. AR aging panel
+3978:### 4. Interco + budget governance panel
+3993:## Work queues
+3997:### Queue yang saya sarankan
+4006:### Wireframe ringkas
+4024:## Relationship ke incident dan risk provisioning
+4028:### Wireframe
+4042:## Action model
+4054:### Example action ribbon
+4062:## Peran pengguna
+4076:## Prioritas MVP
+4104:# Finance Home : lanjut pecah ini jadi wireframe komponen per section yang detail.
+4108:## Struktur layar
+4129:## 1. Header
+4133:### Wireframe
+4149:### Komponen
+4162:### Behavior
+4169:## 2. KPI strip
+4173:### Wireframe
+4184:### Komponen per KPI card
+4193:### KPI detail
+4203:### States
+4211:## 3. Governance alerts + close readiness
+4215:### 3A. Governance alert strip
+4227:### Komponen
+4236:### Behavior
+4242:### 3B. Close readiness card
+4258:### Komponen
+4267:### Logic
+4275:## 4A. Entity performance panel
+4279:### Wireframe
+4294:### Komponen
+4302:### Optional interactions
+4308:## 4B. AR aging + cash panel
+4312:### Wireframe
+4333:### Komponen
+4341:### Micro components
+4349:### States
+4356:## 4C. Branch / cost center health panel
+4360:### Wireframe
+4377:### Komponen
+4387:### Notes
+4393:## 4D. Interco + budget governance panel
+4397:### Wireframe
+4415:### Komponen
+4423:### Logic notes
+4429:## 5A. Overdue invoice queue
+4433:### Wireframe
+4450:### Row components
+4461:### Quick actions
+4469:## 5B. Unmatched payment queue
+4473:### Wireframe
+4490:### Komponen
+4501:### States
+4509:## 5C. Pending interco queue
+4513:### Wireframe
+4530:### Komponen
+4542:### Action rules
+4548:## 5D. Incident-based risk queue
+4552:### Wireframe
+4569:### Komponen
+4580:### Notes
+4586:## 6. Sticky action footer
+4590:### Wireframe
+4600:### Komponen
+4609:### Interaction
+4615:## Drawer dan modal pendukung
+4619:### A. Close blocker drawer
+4630:### B. Payment match modal
+4641:### C. Interco review modal
+4654:## Komponen desain per section
+4669:## Role-based variasi
+4681:## MVP prioritas section
+4709:# breakdown Interco Console + Invoice Workbench
+4713:## Interco Console
+4717:### Struktur utama
+4739:### 1. Header
+4754:#### Komponen
+4764:### 2. KPI strip
+4776:#### KPI cards
+4786:### 3. Governance alert band
+4798:#### Alert logic
+4806:### 4. Filter bar
+4810:#### Filter fields
+4823:#### Bulk actions
+4831:### 5. Interco queue table
+4845:#### Kolom yang saya sarankan
+4859:#### Row actions
+4868:### 6. Interco detail drawer
+4872:#### 6A. Summary
+4885:#### 6B. TP mapping
+4897:#### 6C. Source link \& evidence
+4907:#### 6D. Elimination checklist
+4919:#### 6E. Audit trail
+4930:### 7. Sticky close footer
+4939:## Invoice Workbench
+4943:### Struktur utama
+4965:### 1. Header
+4979:#### Komponen
+4990:### 2. KPI strip
+5002:#### KPI cards
+5012:### 3. Governance alerts
+5024:#### Why this matters
+5028:### 4. Filter bar
+5030:#### Filter fields
+5043:#### Bulk actions
+5052:### 5. Invoice table
+5066:#### Kolom yang wajib
+5079:#### Optional kolom
+5087:#### Row actions
+5095:### 6. Invoice detail drawer
+5097:#### 6A. Summary
+5110:#### 6B. Amount breakdown
+5123:#### 6C. Payment application
+5135:#### 6D. Entity / attribution panel
+5155:#### 6E. Audit / notes
+5167:### 7. Sticky AR footer
+5175:## Hubungan Interco Console dan Invoice Workbench
+5179:### Cross-screen flow yang saya sarankan
+5187:## Prioritas MVP
+5211:# Interco Console + Invoice Workbench : lanjut pecah ini jadi wireframe komponen per section yang detail.
+5215:## Interco Console
+5219:### Layout layar
+5241:### A. Header + scope
+5245:#### Wireframe
+5261:#### Komponen
+5274:#### Interaction
+5281:### B. KPI strip
+5285:#### Wireframe
+5295:#### Komponen per KPI
+5303:#### Suggested click behaviors
+5311:### C. Alert band
+5315:#### Wireframe
+5327:#### Komponen
+5335:#### Alert sources
+5343:### D. Filter / saved view / bulk action bar
+5347:#### Wireframe
+5361:#### Filters
+5373:#### Bulk actions
+5381:### E. Interco queue table
+5385:#### Wireframe
+5397:#### Kolom final yang saya sarankan
+5414:#### Badge logic
+5422:#### Row quick actions
+5431:### F. Detail drawer
+5435:#### F1. Identity \& summary
+5456:#### F2. Entity pair \& amount
+5474:#### F3. TP mapping
+5500:#### F4. Source evidence
+5524:#### F5. Elimination checklist
+5552:#### F6. Notes \& audit
+5570:### G. Sticky close footer
+5574:#### Wireframe
+5586:## Invoice Workbench
+5590:### Layout layar
+5612:### A. Header + scope
+5616:#### Wireframe
+5631:#### Komponen
+5644:### B. KPI strip
+5648:#### Wireframe
+5658:#### KPI definitions
+5668:### C. Alert band
+5672:#### Wireframe
+5684:#### Komponen
+5692:### D. Filter / saved view / bulk action bar
+5696:#### Wireframe
+5710:#### Filters
+5722:#### Bulk actions
+5730:### E. Invoice table
+5734:#### Wireframe
+5746:#### Kolom final
+5762:#### Badge logic
+5771:#### Row quick actions
+5780:### F. Invoice detail drawer
+5784:#### F1. Summary
+5809:#### F2. Amount breakdown
+5827:#### F3. Aging \& collection
+5847:#### F4. Payment application
+5871:#### F5. Entity validation
+5902:#### F6. Notes \& audit
+5921:### G. Sticky AR footer
+5925:#### Wireframe
+5937:## Hubungan antar-layar
+5941:### Cross-links yang wajib
+5949:### Shared UI grammar
+5959:## Role behavior
+5971:## MVP build order
+5996:# pelajari berikut ini sebelum kearah lainnya:
+6003:## Palantir
+6009:## Anduril
+6015:## Implikasi ke desain kita
+6026:## Arah berikutnya
+6086:# buat summary nya
+6090:## Inti konsep
+6096:## Arsitektur sistem
+6100:## Implikasi praktis
+6104:## Relevansi ke ABC
+6122:# Summary untuk ABC
+6198:# summary untuk Agent coder
+6202:## Ringkasan teknis
+6210:## Arsitektur yang penting
+6219:## Implikasi untuk coding agent
+6229:## Dalam konteks ABC
+6233:## Prinsip coding singkat
+6269:# summary untuk agent coder membangun ABC
+6273:## Mandat sistem
+6277:## Prinsip implementasi
+6288:## Cara berpikir data
+6299:## Arsitektur minimum
+6309:## Domain prioritas
+6319:## Rules yang wajib di-hardcode secara domain
+6330:## Desain backend
+6341:## Desain API
+6358:## Desain UI
+6372:## Perubahan budaya yang harus diakomodasi sistem
+6378:## Anti-pattern untuk agent coder
+6389:## Deliverable engineering yang benar
+6414:# High Level Design penerapan Palantir system look like pada ABC Express
+6418:## Prinsip desain
+6422:## Bentuk arsitektur
+6479:## Domain inti
+6491:## Action-centric system
+6503:## Integration model
+6516:## Representation layer
+6529:## Governance layer
+6540:## Wave implementasi
+6551:## Bentuk sistem di ABC
+6572:# jika satu ontology layer berada di tengah, maka apa yg ada di bawah nya?
+6576:## Lapisan di bawah
+6587:## Analoginya
+6591:## Ringkasnya
+6607:# bagaimana lapisan sumber data dan sistem operasional berinteraksi dengan end user
+6611:## Alur interaksi
+6621:## Apa yang user lihat
+6625:## Peran sistem bawah
+6629:## Contoh konkret
+6647:# berarti kami harus membuat seperti Palantir Foundry juga
+6651:## Yang wajib ditiru
+6663:## Yang tidak perlu ditiru
+6674:## Bentuk realistis untuk kalian
+6685:## Cara memandangnya
+6703:# https://www.palantir.com/docs/foundry/ontology/why-ontology
+6707:## Inti pesan Palantir
+6718:## Empat lapisan inti
+6730:## Implikasi untuk kalian
+6740:## Yang paling relevan dari halaman itu
