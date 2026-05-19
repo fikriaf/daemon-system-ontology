@@ -16,7 +16,7 @@ describe('Auth Middleware', () => {
     const token = 'test-token';
     const hash = crypto.createHash('sha256').update(token).digest('hex');
 
-    app.decorate('db', {});
+    app.decorate('db', {} as any);
     vi.mock('../../operators/operator.repository.js', () => ({
       OperatorRepository: vi.fn().mockImplementation(() => ({
         findByApiKeyHash: vi.fn().mockResolvedValue({
