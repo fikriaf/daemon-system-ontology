@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, boolean, jsonb, timestamp, real } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, integer, boolean, jsonb, timestamp, real, primaryKey } from 'drizzle-orm/pg-core';
 
 // ─── Tenant Registry ──────────────────────────────────────────────────────────
 // Metadata client — tidak ada data bisnis client di sini
@@ -109,3 +109,22 @@ export const serverLogs = pgTable('server_logs', {
   message: text('message'),                        // Error message jika ada
   loggedAt: timestamp('logged_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
+// ─── Operators ────────────────────────────────────────────────────────────────
+export const operators = pgTable('operators', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull().unique(),
+  role: text('role').notNull(), // 'admin' | 'operator'
+  apiKeyHash: text('api_key_hash').notNull(),
+  status: text('status').notNull().default('active'), // 'active' | 'suspended'
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const operatorTenantAccess = pgTable('operator_tenant_access', {
+  operatorId: uuid('operator_id').notNull().references(() => operators.id),
+  tenantId: uuid('tenant_id').notNull().references(() => tenants.id),
+}, (t) => ({
+  pk: primaryKey({ columns: [t.operatorId, t.tenantId] }),
+}));
+
