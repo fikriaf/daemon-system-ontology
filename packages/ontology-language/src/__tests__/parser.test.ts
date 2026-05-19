@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
+import { join } from 'path';
 import { ObjectTypeSchema } from '../types/object-type.js';
+import { parseObjectTypeFile, parseLinkTypeFile, parseActionTypeFile } from '../parser/ontology.parser.js';
+
+const fixturesDir = join(import.meta.dirname, 'fixtures');
 
 describe('ObjectTypeSchema', () => {
   it('validates a valid object type definition', () => {
@@ -56,5 +60,48 @@ describe('ObjectTypeSchema', () => {
 
     const result = ObjectTypeSchema.safeParse(input);
     expect(result.success).toBe(false);
+  });
+});
+
+describe('parseObjectTypeFile', () => {
+  it('parses a valid object type YAML file', async () => {
+    const result = await parseObjectTypeFile(
+      join(fixturesDir, 'shipment.object-type.yaml')
+    );
+    expect(result.apiName).toBe('Shipment');
+    expect(result.primaryKey).toBe('shipmentId');
+    expect(result.properties).toHaveLength(5);
+    const statusProp = result.properties.find(p => p.name === 'status');
+    expect(statusProp?.type).toBe('enum');
+  });
+
+  it('throws on nonexistent file', async () => {
+    await expect(
+      parseObjectTypeFile(join(fixturesDir, 'nonexistent.yaml'))
+    ).rejects.toThrow();
+  });
+});
+
+describe('parseLinkTypeFile', () => {
+  it('parses a valid link type YAML file', async () => {
+    const result = await parseLinkTypeFile(
+      join(fixturesDir, 'shipment-customer.link-type.yaml')
+    );
+    expect(result.apiName).toBe('shipment_customer');
+    expect(result.fromObjectType).toBe('Shipment');
+    expect(result.toObjectType).toBe('Customer');
+    expect(result.cardinality).toBe('MANY_TO_ONE');
+  });
+});
+
+describe('parseActionTypeFile', () => {
+  it('parses a valid action type YAML file', async () => {
+    const result = await parseActionTypeFile(
+      join(fixturesDir, 'transition-shipment-state.action-type.yaml')
+    );
+    expect(result.apiName).toBe('transitionShipmentState');
+    expect(result.targetObjectType).toBe('Shipment');
+    expect(result.requiresApproval).toBe(true);
+    expect(result.parameters).toHaveLength(3);
   });
 });
