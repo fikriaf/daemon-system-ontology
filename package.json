@@ -1,6 +1,7 @@
 {
   "name": "daemon-system-ontology",
   "private": true,
+  "packageManager": "pnpm@10.18.1",
   "scripts": {
     "build": "turbo build",
     "test": "turbo test",

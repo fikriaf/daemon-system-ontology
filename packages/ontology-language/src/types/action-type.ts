@@ -1,11 +1,42 @@
 import { z } from 'zod';
 
-const ActionParameterSchema = z.object({
+// Base schema for action parameters
+const ActionParameterBaseSchema = z.object({
   name: z.string().min(1),
-  type: z.enum(['string', 'number', 'boolean', 'date', 'enum']),
   required: z.boolean().default(false),
-  values: z.array(z.string()).optional(), // untuk type: enum
 });
+
+// Specific parameter type variants
+const StringActionParameterSchema = ActionParameterBaseSchema.extend({
+  type: z.literal('string'),
+});
+
+const NumberActionParameterSchema = ActionParameterBaseSchema.extend({
+  type: z.literal('number'),
+});
+
+const BooleanActionParameterSchema = ActionParameterBaseSchema.extend({
+  type: z.literal('boolean'),
+});
+
+const DateActionParameterSchema = ActionParameterBaseSchema.extend({
+  type: z.literal('date'),
+});
+
+const EnumActionParameterSchema = ActionParameterBaseSchema.extend({
+  type: z.literal('enum'),
+  values: z.array(z.string()).min(1), // required for enum type
+});
+
+const ActionParameterSchema = z.discriminatedUnion('type', [
+  StringActionParameterSchema,
+  NumberActionParameterSchema,
+  BooleanActionParameterSchema,
+  DateActionParameterSchema,
+  EnumActionParameterSchema,
+]);
+
+export type ActionParameter = z.infer<typeof ActionParameterSchema>;
 
 export const ActionTypeDefinitionSchema = z.object({
   apiName: z.string().min(1),

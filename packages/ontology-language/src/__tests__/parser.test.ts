@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { join } from 'path';
 import { ObjectTypeSchema } from '../types/object-type.js';
+import { ActionTypeSchema } from '../types/action-type.js';
 import { parseObjectTypeFile, parseLinkTypeFile, parseActionTypeFile } from '../parser/ontology.parser.js';
 
 const fixturesDir = join(import.meta.dirname, 'fixtures');
@@ -91,6 +92,24 @@ describe('parseLinkTypeFile', () => {
     expect(result.fromObjectType).toBe('Shipment');
     expect(result.toObjectType).toBe('Customer');
     expect(result.cardinality).toBe('MANY_TO_ONE');
+  });
+});
+
+describe('ActionTypeSchema', () => {
+  it('rejects enum parameter without values array', () => {
+    const input = {
+      actionType: {
+        apiName: 'testAction',
+        displayName: 'Test Action',
+        targetObjectType: 'Shipment',
+        parameters: [
+          { name: 'status', type: 'enum', required: true },
+          // missing values
+        ],
+      },
+    };
+    const result = ActionTypeSchema.safeParse(input);
+    expect(result.success).toBe(false);
   });
 });
 
