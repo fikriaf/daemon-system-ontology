@@ -16,6 +16,7 @@ export interface InternalAgentAuditEntry {
   tool: string;
   action: 'allowed' | 'denied' | 'error';
   reason?: string;
+  operatorId?: string;
 }
 
 export interface EvidenceUpdate {
@@ -54,7 +55,10 @@ export class InternalAgentGovernance {
     },
   };
 
-  constructor(private readonly policy: InternalAgentPolicy) {
+  constructor(
+    private readonly policy: InternalAgentPolicy,
+    private readonly operatorId?: string
+  ) {
     this.allowedTools = new Set(policy.allowedTools);
     this.allowedTenantIds = policy.tenantIds ? new Set(policy.tenantIds) : undefined;
   }
@@ -89,12 +93,12 @@ export class InternalAgentGovernance {
     this.callCount += 1;
     this.toolsCalled.add(toolName);
     this.evidence.toolsCalled = [...this.toolsCalled];
-    this.audit.push({ tool: toolName, action: 'allowed' });
+    this.audit.push({ tool: toolName, action: 'allowed', operatorId: this.operatorId });
 
     try {
       return { allowed: true, value: await execute() };
     } catch (error) {
-      this.audit.push({ tool: toolName, action: 'error', reason: getErrorReason(error) });
+      this.audit.push({ tool: toolName, action: 'error', reason: getErrorReason(error), operatorId: this.operatorId });
       throw error;
     }
   }
@@ -130,7 +134,7 @@ export class InternalAgentGovernance {
   }
 
   private deny(tool: string, reason: string): GovernedToolResult<never> {
-    this.audit.push({ tool, action: 'denied', reason });
+    this.audit.push({ tool, action: 'denied', reason, operatorId: this.operatorId });
     return { allowed: false, denial: reason };
   }
 }

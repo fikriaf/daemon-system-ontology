@@ -36,6 +36,7 @@ export interface InternalAgentResponse {
     tool: string;
     action: 'allowed' | 'denied' | 'error';
     reason?: string;
+    operatorId?: string;
   }[];
 }
 
@@ -77,10 +78,11 @@ export class InternalAgentRunner {
       healthRepository: HealthRepository;
       logRepository: LogRepository;
     },
-    model: BaseChatModel
+    model: BaseChatModel,
+    operatorId?: string
   ): InternalAgentRunner {
     const effectivePolicy = composeInternalAgentPolicy(override);
-    const governance = new InternalAgentGovernance(effectivePolicy);
+    const governance = new InternalAgentGovernance(effectivePolicy, operatorId);
 
     return new InternalAgentRunner(
       effectivePolicy,

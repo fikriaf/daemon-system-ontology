@@ -62,6 +62,14 @@ describe('Internal agent policy composition', () => {
 });
 
 describe('Internal agent governance', () => {
+  it('includes operatorId in audit logs if provided', async () => {
+    const governance = new InternalAgentGovernance(READONLY_OPERATOR_POLICY, 'op-123');
+    await governance.runTool('list_tenants', {}, async () => ({ tenants: [] }));
+    
+    const audit = governance.getAudit();
+    expect(audit[0].operatorId).toBe('op-123');
+  });
+
   it('allows tools in policy, returns allowed true/value, records toolsCalled and allowed audit', async () => {
     const governance = new InternalAgentGovernance(
       composeInternalAgentPolicy({ allowedTools: ['get_tenant'], tenantIds: ['tenant-a'] })
