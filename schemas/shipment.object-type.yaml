@@ -1,0 +1,23 @@
+objectType:
+  apiName: Shipment
+  displayName: Shipment
+  primaryKey: shipmentId
+  titleProperty: shipmentId
+  description: Represents a logistics shipment
+  properties:
+    - name: shipmentId
+      type: string
+      required: true
+    - name: status
+      type: enum
+      values: [Draft, InTransit, Delivered, Cancelled]
+      required: true
+    - name: legalEntityId
+      type: string
+      required: true
+    - name: originCity
+      type: string
+      required: false
+    - name: destinationCity
+      type: string
+      required: false

@@ -1,4 +1,4 @@
-import { parseYamlFile } from './yaml.parser.js';
+import { parseYamlFile, parseYamlContent } from './yaml.parser.js';
 import { ObjectTypeSchema, type ObjectTypeDefinition } from '../types/object-type.js';
 import { LinkTypeSchema, type LinkTypeDefinition } from '../types/link-type.js';
 import { ActionTypeSchema, type ActionTypeDefinition } from '../types/action-type.js';
@@ -17,6 +17,15 @@ export async function parseObjectTypeFile(filePath: string): Promise<ObjectTypeD
   return result.data.objectType;
 }
 
+export function parseObjectTypeContent(content: string): ObjectTypeDefinition {
+  const raw = parseYamlContent(content);
+  const result = ObjectTypeSchema.safeParse(raw);
+  if (!result.success) {
+    throw new Error(`Invalid object type schema:\n${result.error.toString()}`);
+  }
+  return result.data.objectType;
+}
+
 export async function parseLinkTypeFile(filePath: string): Promise<LinkTypeDefinition> {
   const raw = await parseYamlFile(filePath);
   const result = LinkTypeSchema.safeParse(raw);
@@ -28,6 +37,15 @@ export async function parseLinkTypeFile(filePath: string): Promise<LinkTypeDefin
   return result.data.linkType;
 }
 
+export function parseLinkTypeContent(content: string): LinkTypeDefinition {
+  const raw = parseYamlContent(content);
+  const result = LinkTypeSchema.safeParse(raw);
+  if (!result.success) {
+    throw new Error(`Invalid link type schema:\n${result.error.toString()}`);
+  }
+  return result.data.linkType;
+}
+
 export async function parseActionTypeFile(filePath: string): Promise<ActionTypeDefinition> {
   const raw = await parseYamlFile(filePath);
   const result = ActionTypeSchema.safeParse(raw);
@@ -35,6 +53,15 @@ export async function parseActionTypeFile(filePath: string): Promise<ActionTypeD
     throw new Error(
       `Invalid action type schema in ${filePath}:\n${result.error.toString()}`
     );
+  }
+  return result.data.actionType;
+}
+
+export function parseActionTypeContent(content: string): ActionTypeDefinition {
+  const raw = parseYamlContent(content);
+  const result = ActionTypeSchema.safeParse(raw);
+  if (!result.success) {
+    throw new Error(`Invalid action type schema:\n${result.error.toString()}`);
   }
   return result.data.actionType;
 }

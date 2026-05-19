@@ -1,5 +1,6 @@
 import { ChatOpenAI } from '@langchain/openai';
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
+import type { TenantAgentConfig } from '../config/tenant-config.store.js';
 
 /**
  * Config env yang dibaca oleh model factory.
@@ -44,6 +45,19 @@ function parseAgentModel(agentModel: string): ParsedModel {
     provider: agentModel.slice(0, colonIdx),
     modelName: agentModel.slice(colonIdx + 1),
   };
+}
+
+/**
+ * Resolve model dari per-tenant config, dengan fallback ke env vars.
+ * Urutan prioritas: tenantConfig > env > default
+ */
+export function createModelFromConfig(
+  tenantConfig: TenantAgentConfig | null,
+  envConfig: ModelConfig = { agentModel: process.env.AGENT_MODEL ?? 'openai:gpt-4o' }
+): BaseChatModel {
+  const effectiveModel = tenantConfig?.agentModel ?? envConfig.agentModel;
+  const effectiveTemp = tenantConfig?.temperature ?? envConfig.temperature;
+  return createModelFromEnv({ agentModel: effectiveModel, temperature: effectiveTemp });
 }
 
 /**

@@ -15,6 +15,10 @@ const config = {
   redisPort: Number(process.env.REDIS_PORT ?? '6381'),
   schemaDir: process.env.SCHEMA_DIR ?? './schemas',
   defaultTenantId: process.env.TENANT_ID ?? 'default',
+  monitoringEnabled: process.env.MONITORING_ENABLED === 'true',
+  monitoringIntervalMs: Number(process.env.MONITORING_INTERVAL_MS ?? '300000'),
+  controlPlaneUrl: process.env.CONTROL_PLANE_URL,
+  controlPlaneSecret: process.env.CONTROL_PLANE_SECRET,
 };
 
 const app = await buildAgentServer(config);

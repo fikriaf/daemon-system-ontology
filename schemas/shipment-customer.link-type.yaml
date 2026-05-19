@@ -1,0 +1,7 @@
+linkType:
+  apiName: shipment_customer
+  displayName: "Shipment -> Customer"
+  fromObjectType: Shipment
+  toObjectType: Customer
+  cardinality: MANY_TO_ONE
+  description: Links a shipment to its customer

@@ -13,6 +13,15 @@ export class ObjectRepository {
     return row;
   }
 
+  async update(id: string, properties: Record<string, unknown>): Promise<ObjectRow | undefined> {
+    const [row] = await this.db
+      .update(objects)
+      .set({ properties, updatedAt: new Date() })
+      .where(and(eq(objects.id, id), isNull(objects.deletedAt)))
+      .returning();
+    return row;
+  }
+
   async findById(id: string): Promise<ObjectRow | undefined> {
     const [row] = await this.db
       .select()
@@ -37,10 +46,12 @@ export class ObjectRepository {
     });
   }
 
-  async softDelete(id: string): Promise<void> {
-    await this.db
+  async softDelete(id: string): Promise<boolean> {
+    const [row] = await this.db
       .update(objects)
       .set({ deletedAt: new Date() })
-      .where(eq(objects.id, id));
+      .where(and(eq(objects.id, id), isNull(objects.deletedAt)))
+      .returning();
+    return !!row;
   }
 }

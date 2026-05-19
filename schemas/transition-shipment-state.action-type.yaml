@@ -1,0 +1,17 @@
+actionType:
+  apiName: transitionShipmentState
+  displayName: Transition Shipment State
+  targetObjectType: Shipment
+  requiresApproval: true
+  description: Transitions a shipment to a new lifecycle state
+  parameters:
+    - name: shipmentId
+      type: string
+      required: true
+    - name: newStatus
+      type: enum
+      values: [InTransit, Delivered, Cancelled]
+      required: true
+    - name: reason
+      type: string
+      required: false

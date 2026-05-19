@@ -1,15 +1,24 @@
 import type { FastifyPluginAsync } from 'fastify';
 
 export const schemaReadRoute: FastifyPluginAsync = async (fastify) => {
-  fastify.get('/object-types', async (_request, reply) => {
+  fastify.get('/', {
+    preHandler: fastify.requireRole('viewer'),
+  }, async (_request, reply) => {
     const registry = fastify.engine.getRegistry();
-    const names = registry.getObjectTypeNames();
-    return reply.send({ data: names });
+    return reply.send({ data: registry.toSchema() });
   });
 
-  fastify.get('/action-types', async (_request, reply) => {
+  fastify.get('/object-types', {
+    preHandler: fastify.requireRole('viewer'),
+  }, async (_request, reply) => {
     const registry = fastify.engine.getRegistry();
-    const names = registry.getActionTypeNames();
-    return reply.send({ data: names });
+    return reply.send({ data: registry.getObjectTypeNames() });
+  });
+
+  fastify.get('/action-types', {
+    preHandler: fastify.requireRole('viewer'),
+  }, async (_request, reply) => {
+    const registry = fastify.engine.getRegistry();
+    return reply.send({ data: registry.getActionTypeNames() });
   });
 };

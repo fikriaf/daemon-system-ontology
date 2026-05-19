@@ -49,4 +49,15 @@ export class ActionProposer {
   async deleteProposal(proposalId: string): Promise<void> {
     await this.redis.del(`proposal:${this.tenantId}:${proposalId}`);
   }
+
+  async listByTenant(): Promise<Proposal[]> {
+    const pattern = `proposal:${this.tenantId}:*`;
+    const keys = await this.redis.keys(pattern);
+    if (keys.length === 0) return [];
+
+    const values = await this.redis.mget(...keys);
+    return values
+      .filter((v): v is string => v !== null)
+      .map((v) => JSON.parse(v) as Proposal);
+  }
 }

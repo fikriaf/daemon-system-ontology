@@ -31,3 +31,13 @@ export const schemaOverrides = pgTable('schema_overrides', {
   payload: jsonb('payload').notNull(),
   appliedAt: timestamp('applied_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
+// Stores the active schema per tenant — enables hot reload without restart
+export const tenantSchemas = pgTable('tenant_schemas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: text('tenant_id').notNull().unique(),
+  schema: jsonb('schema').notNull(),
+  version: text('version').notNull().default('1'),
+  uploadedBy: text('uploaded_by').notNull(),
+  uploadedAt: timestamp('uploaded_at', { withTimezone: true }).defaultNow().notNull(),
+});

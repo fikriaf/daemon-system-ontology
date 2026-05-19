@@ -5,6 +5,9 @@ export type ObjectRow = {
   typeApiName: string;
   properties: Record<string, unknown>;
   legalEntityId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 };
 
 export class ObjectQueryBuilder {

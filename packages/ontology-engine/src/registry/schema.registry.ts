@@ -16,6 +16,20 @@ export class SchemaRegistry {
     this.actionTypes = new Map(schema.actionTypes.map(a => [a.apiName, a]));
   }
 
+  reload(schema: OntologySchema): void {
+    this.objectTypes = new Map(schema.objectTypes.map(o => [o.apiName, o]));
+    this.linkTypes = new Map(schema.linkTypes.map(l => [l.apiName, l]));
+    this.actionTypes = new Map(schema.actionTypes.map(a => [a.apiName, a]));
+  }
+
+  toSchema(): OntologySchema {
+    return {
+      objectTypes: Array.from(this.objectTypes.values()),
+      linkTypes: Array.from(this.linkTypes.values()),
+      actionTypes: Array.from(this.actionTypes.values()),
+    };
+  }
+
   getObjectType(apiName: string): ObjectTypeDefinition | undefined {
     return this.objectTypes.get(apiName);
   }

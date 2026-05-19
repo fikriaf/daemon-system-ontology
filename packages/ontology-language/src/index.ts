@@ -13,8 +13,11 @@ export { OntologySchemaSchema } from './types/ontology-schema.js';
 // Parser
 export {
   parseObjectTypeFile,
+  parseObjectTypeContent,
   parseLinkTypeFile,
+  parseLinkTypeContent,
   parseActionTypeFile,
+  parseActionTypeContent,
   loadOntologyFromDirectory,
 } from './parser/ontology.parser.js';
 

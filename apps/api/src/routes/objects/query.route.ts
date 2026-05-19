@@ -10,7 +10,9 @@ export const objectsQueryRoute: FastifyPluginAsync = async (fastify) => {
   fastify.get<{
     Params: { type: string };
     Querystring: Record<string, string>;
-  }>('/:type', async (request, reply) => {
+  }>('/:type', {
+    preHandler: fastify.requireRole('viewer'),
+  }, async (request, reply) => {
     const { type } = request.params;
     const query = QueryStringSchema.parse(request.query);
 
