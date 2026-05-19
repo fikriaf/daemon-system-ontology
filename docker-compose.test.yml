@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   postgres-test:
-    image: apache/age:PG16_latest
+    image: apache/age:latest
     environment:
       POSTGRES_USER: daemon
       POSTGRES_PASSWORD: daemon_test
@@ -17,7 +17,7 @@ services:
   redis-test:
     image: redis:7-alpine
     ports:
-      - "6380:6379"
+      - "6381:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
