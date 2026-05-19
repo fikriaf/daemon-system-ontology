@@ -1,0 +1,15 @@
+objectType:
+  apiName: Customer
+  displayName: Customer
+  primaryKey: customerId
+  titleProperty: customerId
+  properties:
+    - name: customerId
+      type: string
+      required: true
+    - name: name
+      type: string
+      required: true
+    - name: legalEntityId
+      type: string
+      required: true

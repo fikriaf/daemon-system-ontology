@@ -2,6 +2,9 @@ import { parseYamlFile } from './yaml.parser.js';
 import { ObjectTypeSchema, type ObjectTypeDefinition } from '../types/object-type.js';
 import { LinkTypeSchema, type LinkTypeDefinition } from '../types/link-type.js';
 import { ActionTypeSchema, type ActionTypeDefinition } from '../types/action-type.js';
+import { readdir } from 'fs/promises';
+import { join, extname } from 'path';
+import type { OntologySchema } from '../types/ontology-schema.js';
 
 export async function parseObjectTypeFile(filePath: string): Promise<ObjectTypeDefinition> {
   const raw = await parseYamlFile(filePath);
@@ -34,4 +37,26 @@ export async function parseActionTypeFile(filePath: string): Promise<ActionTypeD
     );
   }
   return result.data.actionType;
+}
+
+export async function loadOntologyFromDirectory(dirPath: string): Promise<OntologySchema> {
+  const files = await readdir(dirPath);
+  const yamlFiles = files.filter(f => extname(f) === '.yaml' || extname(f) === '.yml');
+
+  const objectTypes: OntologySchema['objectTypes'] = [];
+  const linkTypes: OntologySchema['linkTypes'] = [];
+  const actionTypes: OntologySchema['actionTypes'] = [];
+
+  for (const file of yamlFiles) {
+    const filePath = join(dirPath, file);
+    if (file.endsWith('.object-type.yaml') || file.endsWith('.object-type.yml')) {
+      objectTypes.push(await parseObjectTypeFile(filePath));
+    } else if (file.endsWith('.link-type.yaml') || file.endsWith('.link-type.yml')) {
+      linkTypes.push(await parseLinkTypeFile(filePath));
+    } else if (file.endsWith('.action-type.yaml') || file.endsWith('.action-type.yml')) {
+      actionTypes.push(await parseActionTypeFile(filePath));
+    }
+  }
+
+  return { objectTypes, linkTypes, actionTypes };
 }
