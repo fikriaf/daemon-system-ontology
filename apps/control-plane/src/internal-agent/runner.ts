@@ -1,7 +1,6 @@
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import type { InternalAgentPolicy, InternalAgentPolicyOverride } from './policy.js';
 import { composeInternalAgentPolicy } from './policy.js';
-import type { InternalAgentGovernance } from './governance.js';
 import { InternalAgentGovernance } from './governance.js';
 import { INTERNAL_AGENT_SYSTEM_PROMPT, createUserPrompt } from './prompt.js';
 import type { InternalAgentToolsContext, ListTenantsResult, GetTenantResult, GetTenantHealthResult, GetTenantMetricsResult, QueryTenantLogsResult, SummarizeTenantIncidentsResult } from './tools.js';
@@ -111,7 +110,7 @@ export class InternalAgentRunner {
 
     const initialPrompt = createUserPrompt({
       question: request.question,
-      tenantScope: request.tenantIds ?? this.policy.tenantIds,
+      tenantScope: request.tenantIds ?? [...(this.policy.tenantIds ?? [])],
       availableTools: allowedToolNames,
     });
 
