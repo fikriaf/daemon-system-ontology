@@ -15,6 +15,7 @@ import { LogRepository } from '../logs/log.repository.js';
 import type { TenantRepository as ITenantRepository } from '../tenants/tenant.repository.js';
 import type { HealthRepository as IHealthRepository } from '../health/health.repository.js';
 import type { LogRepository as ILogRepository } from '../logs/log.repository.js';
+import { operatorAuth } from './auth.middleware.js';
 
 const InvokeRequestSchema = z.object({
   question: z.string().min(1),
@@ -40,7 +41,8 @@ export type InternalAgentRunnerFactory = (
     healthRepository: IHealthRepository;
     logRepository: ILogRepository;
   },
-  model: ReturnType<typeof createModel>
+  model: ReturnType<typeof createModel>,
+  operatorId?: string
 ) => InternalAgentRunner;
 
 export const internalAgentRoute: FastifyPluginAsync<InternalAgentRouteOptions> = async (fastify, options) => {
@@ -48,7 +50,11 @@ export const internalAgentRoute: FastifyPluginAsync<InternalAgentRouteOptions> =
 
   fastify.post<{ Body: z.infer<typeof InvokeRequestSchema> }>(
     '/invoke',
+    { preHandler: [operatorAuth] },
     async (request, reply) => {
+      const op = request.operator;
+      if (!op) return reply.code(401).send({ error: 'Unauthorized' });
+
       const parseResult = InvokeRequestSchema.safeParse(request.body);
       if (!parseResult.success) {
         return reply.code(400).send({
@@ -72,15 +78,18 @@ export const internalAgentRoute: FastifyPluginAsync<InternalAgentRouteOptions> =
         if (toolNames) {
           policyOverride.allowedTools = toolNames;
         }
-        if (tenantIds) {
-          policyOverride.tenantIds = tenantIds;
+        
+        if (op.role === 'admin') {
+          if (tenantIds) policyOverride.tenantIds = tenantIds;
+        } else {
+          policyOverride.tenantIds = op.tenantIds;
         }
 
         const effectivePolicy = composeInternalAgentPolicy(
           Object.keys(policyOverride).length > 0 ? policyOverride : undefined
         );
 
-        const governance = new InternalAgentGovernance(effectivePolicy);
+        const governance = new InternalAgentGovernance(effectivePolicy, op.id);
 
         const tenantRepo = new TenantRepository(fastify.db);
         const healthRepo = new HealthRepository(fastify.db);
@@ -95,7 +104,8 @@ export const internalAgentRoute: FastifyPluginAsync<InternalAgentRouteOptions> =
               healthRepository: healthRepo,
               logRepository: logRepo,
             },
-            model
+            model,
+            op.id
           ) ??
           new InternalAgentRunner(
             effectivePolicy,

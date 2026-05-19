@@ -2,6 +2,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Fastify from 'fastify';
 import { internalAgentRoute, InternalAgentRouteOptions } from '../internal-agent.route.js';
 
+vi.mock('../auth.middleware.js', () => ({
+  operatorAuth: async (req: any) => {
+    req.operator = { id: 'admin-1', role: 'admin', tenantIds: [] };
+  }
+}));
+
 const mockModel = {
   invoke: vi.fn().mockResolvedValue({
     content: 'Test answer from model',
