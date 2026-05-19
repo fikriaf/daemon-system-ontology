@@ -1,0 +1,31 @@
+{
+  "name": "@daemon/agent-service",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@daemon/ontology-engine": "workspace:*",
+    "@daemon/ontology-sdk": "workspace:*",
+    "@daemon/ontology-language": "workspace:*",
+    "deepagents": "^1.10.0",
+    "langchain": "^1.4.0",
+    "@langchain/core": "^1.1.0",
+    "@langchain/langgraph": "^1.3.0",
+    "@langchain/openai": "^0.5.0",
+    "fastify": "^5.0.0",
+    "ioredis": "^5.3.2",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}
