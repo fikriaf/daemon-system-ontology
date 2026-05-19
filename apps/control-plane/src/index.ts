@@ -8,6 +8,8 @@ const config = {
   dbPassword: process.env.DB_PASSWORD ?? '',
   dbName: process.env.DB_NAME ?? 'daemon_control',
   internalSecret: process.env.INTERNAL_SECRET ?? 'change-me-in-production',
+  internalAgentModel: process.env.INTERNAL_AGENT_MODEL ?? 'openrouter:minimax/minimax-m2.7',
+  internalAgentTemperature: Number(process.env.INTERNAL_AGENT_TEMPERATURE ?? '0.2'),
 };
 
 const app = await buildControlPlane(config);

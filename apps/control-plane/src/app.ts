@@ -6,6 +6,10 @@ import { logReceiveRoute, logQueryRoute } from './logs/logs.route.js';
 import { wsRoute } from './ws/ws.route.js';
 import { HealthPoller } from './health/health.poller.js';
 import { WsBroadcaster } from './ws/ws.broadcaster.js';
+import {
+  internalAgentRoute,
+  type InternalAgentRunnerFactory,
+} from './internal-agent/internal-agent.route.js';
 
 export interface ControlPlaneConfig {
   port: number;
@@ -16,6 +20,9 @@ export interface ControlPlaneConfig {
   dbName: string;
   internalSecret: string;
   pollIntervalMs?: number;
+  internalAgentModel?: string;
+  internalAgentTemperature?: number;
+  createInternalAgentRunner?: InternalAgentRunnerFactory;
 }
 
 export async function buildControlPlane(config: ControlPlaneConfig) {
@@ -70,6 +77,14 @@ export async function buildControlPlane(config: ControlPlaneConfig) {
   await app.register(healthRoute, { prefix: '/tenants' });
   await app.register(logReceiveRoute, { broadcaster, prefix: '/logs' });
   await app.register(logQueryRoute, { prefix: '/tenants' });
+  await app.register(internalAgentRoute, {
+    prefix: '/internal-agent',
+    modelConfig: {
+      agentModel: config.internalAgentModel ?? 'openrouter:minimax/minimax-m2.7',
+      temperature: config.internalAgentTemperature,
+    },
+    createRunner: config.createInternalAgentRunner,
+  });
   await app.register(wsRoute, { broadcaster });
 
   return app;

@@ -155,6 +155,15 @@ importers:
       '@fastify/websocket':
         specifier: ^11.0.0
         version: 11.2.0
+      '@langchain/core':
+        specifier: ^1.1.0
+        version: 1.1.47(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1)
+      '@langchain/openai':
+        specifier: ^0.5.0
+        version: 0.5.18(@langchain/core@1.1.47(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1))(ws@8.20.1)
+      deepagents:
+        specifier: ^1.10.0
+        version: 1.10.2(langsmith@0.7.1(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1))(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1)(zod-to-json-schema@3.25.2(zod@3.25.76))
       drizzle-orm:
         specifier: ^0.30.0
         version: 0.30.10(@types/pg@8.20.0)(pg@8.21.0)(postgres@3.4.9)
@@ -164,6 +173,9 @@ importers:
       fastify-plugin:
         specifier: ^5.0.0
         version: 5.1.0
+      langchain:
+        specifier: ^1.4.0
+        version: 1.4.1(@langchain/core@1.1.47(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1))(openai@5.23.2(ws@8.20.1)(zod@3.25.76))(ws@8.20.1)(zod-to-json-schema@3.25.2(zod@3.25.76))
       node-cron:
         specifier: ^3.0.0
         version: 3.0.3
