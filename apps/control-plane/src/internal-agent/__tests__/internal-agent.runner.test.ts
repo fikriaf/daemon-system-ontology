@@ -7,16 +7,6 @@ import type { TenantRepository } from '../../tenants/tenant.repository.js';
 import type { HealthRepository } from '../../health/health.repository.js';
 import type { LogRepository } from '../../logs/log.repository.js';
 
-vi.mock('../model.js', () => ({
-  createModel: vi.fn(() => mockModel),
-  getModelConfigFromEnv: vi.fn(() => ({
-    provider: 'openai' as const,
-    modelName: 'gpt-4o-mini',
-    temperature: 0.2,
-    maxTokens: 2048,
-  })),
-}));
-
 describe('internal-agent runner', () => {
   let mockPolicy: InternalAgentPolicy;
   let mockGovernance: InternalAgentGovernance;
@@ -116,8 +106,10 @@ describe('internal-agent runner', () => {
 
       const result = await governance.runTool('get_tenant', { tenantId: 't1' }, async () => ({ id: 't1' }));
 
-      expect(result.allowed).toBe(false);
-      expect(result.denial).toContain('not allowed by policy');
+      expect(result).toMatchObject({
+        allowed: false,
+        denial: expect.stringContaining('not allowed by policy'),
+      });
     });
 
     it('denies tenant-scoped tools without tenantId', async () => {
@@ -126,8 +118,10 @@ describe('internal-agent runner', () => {
 
       const result = await governance.runTool('get_tenant_health', {}, async () => ({ status: 'up' }));
 
-      expect(result.allowed).toBe(false);
-      expect(result.denial).toContain('requires tenantId');
+      expect(result).toMatchObject({
+        allowed: false,
+        denial: expect.stringContaining('requires tenantId'),
+      });
     });
 
     it('denies tools for tenants outside scope', async () => {
@@ -136,8 +130,10 @@ describe('internal-agent runner', () => {
 
       const result = await governance.runTool('get_tenant', { tenantId: 'tenant-2' }, async () => ({ id: 'tenant-2' }));
 
-      expect(result.allowed).toBe(false);
-      expect(result.denial).toContain('outside the allowed');
+      expect(result).toMatchObject({
+        allowed: false,
+        denial: expect.stringContaining('outside the allowed'),
+      });
     });
 
     it('allows tool calls within policy', async () => {
@@ -145,8 +141,7 @@ describe('internal-agent runner', () => {
 
       const result = await governance.runTool('list_tenants', {}, async () => ({ tenants: [] }));
 
-      expect(result.allowed).toBe(true);
-      expect(result.value).toEqual({ tenants: [] });
+      expect(result).toEqual({ allowed: true, value: { tenants: [] } });
     });
 
     it('tracks tools called in audit', async () => {

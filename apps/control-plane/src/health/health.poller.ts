@@ -117,7 +117,7 @@ export class HealthPoller {
         await this.healthRepo.recordServerInfo({
           tenantId,
           nodeVersion: system.nodeVersion as string,
-          platform: undefined,
+          osName: system.platform as string | undefined,
           uptimeSeconds: data.uptime as number,
           memUsedMb: system.memUsedMb as number,
           memTotalMb: system.memTotalMb as number,
