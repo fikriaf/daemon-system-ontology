@@ -1,4 +1,5 @@
 import { createDeepAgent, type SubAgent } from 'deepagents';
+import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import type { OntologyEngine } from '@daemon/ontology-engine';
 import type { OntologyClient, ActionProposer } from '@daemon/ontology-sdk';
 import { createReadObjectsTool } from '../tools/ontology/read-objects.tool.js';
@@ -20,7 +21,8 @@ const OPS_ALLOWLIST = [
 
 export interface RootAgentContext {
   tenantId: string;
-  model: string; // e.g. "openai:gpt-4o"
+  /** Resolved model instance dari createModelFromEnv() */
+  model: BaseChatModel;
   engine: OntologyEngine;
   client: OntologyClient;
   proposer: ActionProposer;

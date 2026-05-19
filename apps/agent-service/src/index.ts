@@ -2,7 +2,10 @@ import { buildAgentServer } from './server.js';
 
 const config = {
   port: Number(process.env.AGENT_PORT ?? '3001'),
-  model: process.env.AGENT_MODEL ?? 'openai:gpt-4o',
+  modelConfig: {
+    agentModel: process.env.AGENT_MODEL ?? 'openai:gpt-4o',
+    temperature: Number(process.env.AGENT_TEMPERATURE ?? '0'),
+  },
   dbHost: process.env.DB_HOST ?? 'localhost',
   dbPort: Number(process.env.DB_PORT ?? '5433'),
   dbUser: process.env.DB_USER ?? 'daemon',
@@ -19,6 +22,7 @@ const app = await buildAgentServer(config);
 try {
   await app.listen({ port: config.port, host: '0.0.0.0' });
   console.log(`Agent service running on port ${config.port}`);
+  console.log(`Model: ${config.modelConfig.agentModel}`);
 } catch (err) {
   app.log.error(err);
   process.exit(1);

@@ -3,10 +3,11 @@ import { OntologyEngine } from '@daemon/ontology-engine';
 import { OntologyClient, ActionProposer } from '@daemon/ontology-sdk';
 import { createRedisClient } from '@daemon/ontology-engine';
 import { createRootAgent } from './agents/root.agent.js';
+import { createModelFromEnv, type ModelConfig } from './model/model.factory.js';
 
 export interface AgentServerConfig {
   port: number;
-  model: string;
+  modelConfig: ModelConfig;
   dbHost: string;
   dbPort: number;
   dbUser: string;
@@ -20,6 +21,9 @@ export interface AgentServerConfig {
 
 export async function buildAgentServer(config: AgentServerConfig) {
   const app = Fastify({ logger: false });
+
+  // Resolve model instance sekali — dipakai semua request
+  const model = createModelFromEnv(config.modelConfig);
 
   // Setup engine once per server
   const engine = await OntologyEngine.create({
@@ -48,7 +52,7 @@ export async function buildAgentServer(config: AgentServerConfig) {
 
     const agent = createRootAgent({
       tenantId,
-      model: config.model,
+      model,
       engine,
       client,
       proposer,
@@ -70,8 +74,11 @@ export async function buildAgentServer(config: AgentServerConfig) {
     return reply.send({ response: content, tenantId });
   });
 
-  // Health check
-  app.get('/health', async () => ({ status: 'ok' }));
+  // Health check — also shows active model config
+  app.get('/health', async () => ({
+    status: 'ok',
+    model: config.modelConfig.agentModel,
+  }));
 
   return app;
 }
