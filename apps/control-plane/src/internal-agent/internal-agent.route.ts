@@ -136,8 +136,8 @@ export const internalAgentRoute: FastifyPluginAsync<InternalAgentRouteOptions> =
         return reply.send(result);
       } catch (error) {
         fastify.log.error(error, 'Internal agent invoke error');
-        return reply.code(500).send({
-          error: error instanceof Error ? error.message : String(error),
+        return reply.code(502).send({
+          error: 'Internal agent failed to produce a response',
         });
       }
     }

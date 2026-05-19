@@ -131,8 +131,8 @@ describe('internal-agent.route', () => {
       },
     });
 
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(502);
     const body = JSON.parse(response.body);
-    expect(body.error).toBeDefined();
+    expect(body.error).toBe('Internal agent failed to produce a response');
   });
 });
